@@ -1,0 +1,43 @@
+Part Two: Fixing the Bugs
+-------------------------
+
+Understanding the code
+
+  1) Explain why this program uses the exclamation operator with the
+     strcmp() function.
+	
+  The function strcmp() returns the difference in the length of two strings. If they are the same length it will return a 0. Since the strcmp() call is within an if statement this zero will be evaluated to 'False', putting the ! opperator will change that to true. In short by saying if(!strcmp(s1, s2)){... you are saying if(sizeof(s1) == sizeof(s2)) {...  
+
+	
+  2) Explain why the 'LENGTH' macro returns the length of an array.
+     Would it work with a pointer to a dynamically allocated array? (Hint:
+     understand sizeof). [Macro: #define LENGTH(s) (sizeof(s) / sizeof(*s))]
+  
+  The LENGTH macro does the following calculation: #total bytes / (bytes/element). This will return the #total elements in the array. It would not work for a pointer to a dynamically allocated array; since the numerator sizeof(s) would return the size of the pointer, not the array as a whole.   
+  
+
+Bug hunting
+
+  3) Explain and fix the logical flow bug within the switch statement.
+     (What happens when the -h option is used?)
+
+  It was missing a break statement, causing it to continue and run the default case as well. This was fixed by adding 'break;' between the printHelp function and the default case.
+
+
+  4) Explain and fix the argument parsing error. (Why is entrycount never
+     zero?)
+
+  The first char[] in argv is the name of the progam, this was being interpreted as the first (and in some cases only) word we are searching for. In order to fix this I added 'argv++;' after 'const char *prog_name = *argv;' in order to move the pointer past the string that holds the program name.
+
+
+  5) Fix print_result() to print results correctly and in the same order
+     as the words were specified on the command line.  Explain your solution.
+
+  Previously the line that printed was as follows:
+
+    printf("%s:%d\n", entries->word, entries->counter);
+  
+  The function prints the same thing every time since entries points to the exact same struct. To fix this I added the entrty count to the entries in order to print each of the WordCountEntries. 
+
+  printf("%s:%d\n", (entries + entry_count)->word, (entries + entry_count)->counter);
+  

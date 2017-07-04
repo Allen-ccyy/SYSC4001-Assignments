@@ -1,0 +1,56 @@
+Review of C
+-----------
+
+ASSIGNMENT1 is a crash course in C.  These are some of the topics you will need
+to keep in mind for all of the sample machine problems.
+
+Common gotchas for new C programmers:
+- C strings
+- switch, case, break statements
+- pointers
+- pointers to pointers
+- pointer arithmetic
+- using argv and argc
+- ?: syntax
+- comma operator (only used occasionally, but can be useful)
+- static, heap and stack variables
+- C library functions for string handling
+
+Pointers and dereferencing syntax (* &)
+
+String handling and library I/O:
+- strcmp, strcpy, strlen, strcat
+- atoi, atol
+- puts, fputs, printf, fprintf, fopen, fclose, scanf
+- using man pages to determine which library must be included
+
+Low-level system I/O:
+- open, write, close
+
+Concepts:
+- declaration vs. definition of variables and functions
+- scope of functions and variables
+- how the linker glues separate compilation units together
+- header files and preprocessor directives (#include, #ifdef)
+
+Skills:
+- using man pages to look up information, e.g., man strcmp
+- understanding compiler and runtime messages
+- using gdb to debug crashes (segfaults)
+- using an editor to write code
+- creating and modifying make files
+- divide and conquer approaches to bugs and implementation problems
+
+Defensive programming and debugging:
+- using assert.h
+- using write, fprintf(stderr, format, ...)
+
+
+- Read the tutorials and take the quizzes here:
+http://www.cprogramming.com/tutorial.html#ctutorial
+
+Man pages:
+When you need specific information about some C function (e.g., return
+values, argument types, multithreading safety properties), man pages may
+provide the answer.  Run "man <function name>" from the shell to view
+the appropriate man page.

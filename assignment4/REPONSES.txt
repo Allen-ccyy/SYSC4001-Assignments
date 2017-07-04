@@ -1,0 +1,9 @@
+1. It is important to merge the adjacent free blocks in order to prevent the memory from being split into many small pieces that can’t be used by larger assignments. If they are not merged properly then the free blocks will slowly shrink in size until they become so small that nothing will fit in them, rendering our memory useless. 
+
+2. The function myFree() should be the one to check to see if there are any adjacent free blocks. After it frees memory it should check both sides in order to see if either are free and merge if possible.
+
+3. One advantage to each strategy:
+First-fit: This won't waste any time searching through all of the available memory. 
+Best-fit: The small gaps of free memory will be filled by the small alocations, this will prevent big empty blocks being filled by small assignments.  
+Worst-fit: This strategy does its best to avoid small (usually useless) holes in free memory, it does so by always allocating new blocks in the largest available slot.
+Next-fit: Like first fit but it has the advantage of not always starting from the top, it is more likely for more memory to be available near the last memory block to be allocated. 

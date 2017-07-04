@@ -1,0 +1,111 @@
+Pointers in C
+-------------
+
+1) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char *temp;
+  strcpy(temp, argv[0]);
+  return 0;
+}
+
+Why is the above code incorrect (i.e., likely to crash)?
+
+
+Temp is not assinged a value, it is an empty pointer. In order for this to work you would need to malloc enough space for the character array you're copying into it. 
+ex. temp = (char *) malloc(x); where x is the number of chars in the string (including  null terminator).
+
+
+2) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char temp[9];
+  strcpy(temp, argv[0]);
+  return 0;
+}
+
+A buffer overflow occurs when the program name is 9 characters long
+(e.g., "12345.exe"). Why?
+
+Argv[0] is a string containing the program name, all strings are delimited by a null character. If the name is 9 chars long, then with the null char, there are 10 chars in the Argv[0]. The program then tries to copy these 10 chars into temp, a char array of size 9, this will overwrite the char one address after argv[8].
+
+
+3) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char *buffer = "Hello";
+  strcpy(buffer, "World");
+  return 0;
+}
+
+Why does this program crash?
+
+The program crashes because buffer points to an unnamed, static array of characters. This causes a an error when it cpystr tries to overwrite it. In order to fix this, switch this line to:
+char buffer[] = "Hello";
+
+
+4) Consider the following C snippet.
+void myfunc()
+{
+  char b[100];
+  char *buffer = &b[0];
+  strcpy(buffer, "World");
+}
+
+Is this correct?  What's a simpler expression for &b[0]?
+
+This code is correct. A simpler form of the expression '&b[0]' (address of the first element in b) is just 'b'.
+
+
+5) Consider the following C program.
+#include <stdio.h>
+int main(int argc, char* argv[])
+{
+  printf("%s %s %s\n", *argv, (*(argv+1)) + 2, *(argv+2));
+  return 0;
+}
+
+If this code is executed using the following line, what will be the output?
+> program1 -n5 abc
+
+Output:
+> program1 5 abc
+
+
+6) Consider the following C program.
+#include <stdio.h>
+#include <string.h>
+char *myfunc(char **argv)
+{
+  char buffer[100];
+  strcpy(buffer, "hello");
+  return buffer;
+}
+int main(int argc, char *argv[])
+{
+  char *s = myfunc(argv);
+  printf("%s\n", s);
+}
+
+What's wrong with this?
+
+Buffer is a local variable to the function 'myfunc'. The local variables will be cleared when the function returns. Suggested solution:
+
+#include <stdio.h>
+#include <string.h>
+void myfunc(char *s)
+{
+  strcpy(s, "hello");
+  
+return;
+}
+int main(int argc, char *argv[])
+{
+  char s[100];
+  myfunc(s);
+  printf("%s\n", s);
+}
+
